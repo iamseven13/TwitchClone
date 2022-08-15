@@ -67,6 +67,8 @@ function ProfileOffline({ streamerProfile, isFollowing, setIsFollowing }) {
 		}
 	}
 
+	// this is something new
+
 	async function handleUnFollow(e) {
 		console.log(appState.setRequestFollowingUpdate);
 		e.preventDefault();
