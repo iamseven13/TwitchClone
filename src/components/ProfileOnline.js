@@ -124,6 +124,8 @@ function ProfileOnline({ streamerProfile, isFollowing, setIsFollowing }) {
 
 	let videoUrl = `http://164.92.134.131:8080/hls/${appState.profileUser.user.streamKey}.m3u8`;
 
+	console.log(streamerProfile);
+
 	return (
 		<>
 			<div className="video-side">
@@ -148,9 +150,9 @@ function ProfileOnline({ streamerProfile, isFollowing, setIsFollowing }) {
 
 						<section className="left-desc__streamerInfo">
 							<h2>{streamerProfile.user.username}</h2>
-							<span>im back baby - Code: {streamerProfile.user.username}</span>
+							<span>{streamerProfile.user.streamTitle}</span>
 							<a href="#" className="left-desc__streamerInfo__game">
-								Fortnite
+								{streamerProfile.user.streamGame}
 							</a>
 						</section>
 					</section>
@@ -258,7 +260,9 @@ function ProfileOnline({ streamerProfile, isFollowing, setIsFollowing }) {
 							2.3M{' '}
 							<span className="streamer-desc-left__followers">followers</span>
 						</span>
-						<span>{streamerProfile.user.username} streams Fortnite.</span>
+						<span>
+							{streamerProfile.user.username} streams all type of games.
+						</span>
 					</section>
 					<section className="streamer-desc-right">
 						<section className="streamer-desc-right__social1">

@@ -3,7 +3,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import io from 'socket.io-client';
 import iconSet from '../selection.json';
 import IcomoonReact, { iconList } from 'icomoon-react';
-
+import ReactPlayer from 'react-player';
 import StateContext from '../StateContext';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -279,10 +279,15 @@ function ProfileOffline({ streamerProfile, isFollowing, setIsFollowing }) {
 					<h2 className="second-section__h2">Recent Broadcasts</h2>
 					<div className="recommended-channels">
 						<div className="first-streamer">
-							<img
-								src={game2}
-								className="first-streamer__gameplay"
-								alt="streamer pic"
+							<ReactPlayer
+								url="https://youtu.be/sr8MwKoARAc"
+								// onReady={handleUserIsLive}
+								forceHLS
+								width="fit-content"
+								height="264px"
+								muted
+								controls="true"
+								stopOnUnmount={false}
 							/>
 							<section className="recommended-desc">
 								<img
@@ -300,10 +305,15 @@ function ProfileOffline({ streamerProfile, isFollowing, setIsFollowing }) {
 						</div>
 
 						<div className="first-streamer">
-							<img
-								src={game4}
-								className="first-streamer__gameplay"
-								alt="streamer pic"
+							<ReactPlayer
+								url="https://www.youtube.com/watch?v=UPtoIy-oPWQ&ab_channel=Throneful"
+								// onReady={handleUserIsLive}
+								forceHLS
+								width="fit-content"
+								height="264px"
+								muted
+								controls="true"
+								stopOnUnmount={false}
 							/>
 							<section className="recommended-desc">
 								<img
@@ -321,10 +331,15 @@ function ProfileOffline({ streamerProfile, isFollowing, setIsFollowing }) {
 						</div>
 
 						<div className="first-streamer">
-							<img
-								src={game5}
-								className="first-streamer__gameplay"
-								alt="streamer pic"
+							<ReactPlayer
+								url="https://www.youtube.com/watch?v=vJWZo0yk_Ok&ab_channel=RGR29"
+								// onReady={handleUserIsLive}
+								forceHLS
+								width="fit-content"
+								height="264px"
+								muted
+								controls="true"
+								stopOnUnmount={false}
 							/>
 							<section className="recommended-desc">
 								<img
@@ -342,10 +357,15 @@ function ProfileOffline({ streamerProfile, isFollowing, setIsFollowing }) {
 						</div>
 
 						<div className="first-streamer">
-							<img
-								src={game3}
-								className="first-streamer__gameplay"
-								alt="streamer pic"
+							<ReactPlayer
+								url="https://www.youtube.com/watch?v=lnVvXkubAbM&ab_channel=KingJoe83"
+								// onReady={handleUserIsLive}
+								forceHLS
+								width="fit-content"
+								height="264px"
+								muted
+								controls="true"
+								stopOnUnmount={false}
 							/>
 							<section className="recommended-desc">
 								<img
@@ -359,6 +379,34 @@ function ProfileOffline({ streamerProfile, isFollowing, setIsFollowing }) {
 											{streamerProfile.user.username}
 										</span>
 										<span className="name-game__span2">Fortnite</span>
+									</section>
+								</section>
+							</section>
+						</div>
+
+						<div className="first-streamer">
+							<ReactPlayer
+								url="https://www.youtube.com/watch?v=hqqx0D3TJhY&ab_channel=Throneful"
+								// onReady={handleUserIsLive}
+								forceHLS
+								width="fit-content"
+								height="264px"
+								muted
+								controls="true"
+								stopOnUnmount={false}
+							/>
+							<section className="recommended-desc">
+								<img
+									src={streamerProfile.user.avatar}
+									className="recommended-desc__avatar"
+								/>
+								<section className="recommended-desc__streamer-info">
+									<h4>Fall guysssssssssssssss</h4>
+									<section className="name-game">
+										<span className="name-game__span1">
+											{streamerProfile.user.username}
+										</span>
+										<span className="name-game__span2">Fall Guys</span>
 									</section>
 								</section>
 							</section>

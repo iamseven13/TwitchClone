@@ -42,6 +42,8 @@ function Dashboard({ loggedIn }) {
 	const [isUserReady, setIsUserReady] = useState(
 		Boolean(localStorage.getItem('dashboardUsername'))
 	);
+	const [streamTitle, setStreamTitle] = useState('');
+	const [streamGame, setStreamGame] = useState('');
 
 	const loggedInUser = appState.user.username;
 	const token = appState.user.token;
@@ -122,10 +124,10 @@ function Dashboard({ loggedIn }) {
 		e.preventDefault();
 		const res = await Axios.put(
 			'http://localhost:2000/api/userGoesLive',
-			{},
+			{ streamGame, streamTitle },
 			config
 		);
-
+		console.log(res.data);
 		if (res.data.username) {
 			setStreamerDashboard(res.data);
 			setIsUserReady(true);
@@ -161,6 +163,8 @@ function Dashboard({ loggedIn }) {
 		return <Navigate to="/" replace />;
 	}
 
+	console.log(streamTitle);
+
 	return (
 		<div className="dashboard-container">
 			<section className="dashboard1">
@@ -190,11 +194,18 @@ function Dashboard({ loggedIn }) {
 						<form className="stream-video-sections" action="submit">
 							<section className="firstInput">
 								<span>Stream Title</span>
-								<input placeholder="Title"></input>
+								<input
+									placeholder="Title"
+									onChange={(e) => setStreamTitle(e.target.value)}
+								></input>
 							</section>
 							<section className="secondInput">
 								<span>Game</span>
-								<input className="input-game" placeholder="Game"></input>
+								<input
+									className="input-game"
+									onChange={(e) => setStreamGame(e.target.value)}
+									placeholder="Game"
+								></input>
 							</section>
 						</form>
 						<section className="grabStreamId">
