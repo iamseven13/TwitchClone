@@ -24,7 +24,7 @@ function EditProfile() {
 		if (newPassword === confirmNewPassword) {
 			try {
 				const res = await Axios.put(
-					'http://localhost:2000/api/ylli/updatePassword',
+					`http://localhost:2000/api/${appState.user.username}/updatePassword`,
 					{ oldPassword, newPassword, confirmNewPassword },
 					config
 				);
