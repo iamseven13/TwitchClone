@@ -46,7 +46,7 @@ function Settings() {
 					<svg className="user-nav__icon">
 						<IcomoonReact iconSet={iconSet} icon="profile" />
 					</svg>
-					<Link className="link-class" to={`/${appState.user.username}`}>
+					<Link className="link-class" to="/settings">
 						Settings
 					</Link>
 				</section>

@@ -1265,3 +1265,57 @@ body {
 	width: auto !important;
 	height: 489px !important;
 }
+
+.edit-profile-container {
+	width: 100%;
+
+	position: relative;
+}
+
+.edit-profile {
+	background-color: var(--color-primary-light3);
+	width: fit-content;
+	margin: 6rem auto;
+
+	font-size: 1.8rem;
+	padding: 7rem;
+	color: var(--color-offline-video);
+}
+
+.edit-profile-form__items input {
+	border: none;
+	padding: 1rem;
+	color: inherit;
+	background-color: var(--color-primary-light);
+	font-size: 1.5rem;
+	width: 90%;
+	transition: all 0.2s;
+	border-radius: 5px;
+}
+
+.edit-profile-form__items input:focus {
+	outline: none;
+	width: 100%;
+}
+
+.edit-profile-form__items {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	padding: 4rem;
+}
+
+.edit-profile-form__items input {
+	margin-bottom: 1.7rem;
+}
+
+.edit-profile-btn {
+	margin-top: 2rem;
+}
+.edit-profile-form__items--buttons {
+	margin: 4rem 2rem;
+}
+
+.edit-profile-buttontype {
+	border: none;
+}

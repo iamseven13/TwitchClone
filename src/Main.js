@@ -22,6 +22,7 @@ import Settings from './components/Settings';
 import ProfileOffline from './components/ProfileOffline';
 import Dashboard from './components/Dashboard';
 import Product from './components/Product';
+import EditProfile from './components/EditProfile';
 
 function Main() {
 	const initialState = {
@@ -143,6 +144,7 @@ function Main() {
 									element={<Dashboard loggedIn={state.loggedIn} />}
 								></Route>
 								<Route path="/payment/stripe" element={<Product />}></Route>
+								<Route path="/settings" element={<EditProfile />}></Route>
 							</Switch>
 						</div>
 					</div>
