@@ -16,7 +16,7 @@ import DispatchContext from '../DispatchContext';
 function Dashboard({ loggedIn }) {
 	const socket = io.connect('http://localhost:2000');
 	let { username } = useParams();
-
+	//
 	const appState = useContext(StateContext);
 	const appDispatch = useContext(DispatchContext);
 	const videoJsOptions = {
