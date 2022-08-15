@@ -1,0 +1,44 @@
+.container {
+	background-color: var(--color-primary);
+}
+
+.top-section {
+	display: flex;
+	align-items: center;
+}
+
+.header {
+	height: 4.5rem;
+	font-size: 1.4rem;
+	border-bottom: var(--color-primary);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.content {
+	display: flex;
+}
+
+.sidebar {
+	flex: 0 0 auto;
+	background-color: var(--color-primary-light);
+	height: 95vh;
+}
+
+.view {
+	flex: 1;
+}
+
+.first-section {
+	display: inline-block;
+	height: 35vh;
+}
+
+.second-section {
+	height: 30vh;
+}
+
+.third-section {
+	height: 30vh;
+}
