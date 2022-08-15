@@ -34,7 +34,7 @@ function ProfileOnline({ streamerProfile, isFollowing, setIsFollowing }) {
 		autoplay: 'play',
 		controls: true,
 		preload: 'auto',
-		width: 480,
+		muted: true,
 		sources: [
 			{
 				src: `http://164.92.134.131:8080/hls/${appState.profileUser.user.streamKey}.m3u8`,
@@ -127,18 +127,11 @@ function ProfileOnline({ streamerProfile, isFollowing, setIsFollowing }) {
 	return (
 		<>
 			<div className="video-side">
-				{/* <ReactPlayer
-					key={Math.random()}
-					url={videoUrl}
-					playing={true}
-					loop={true}
-					forcehls="true"
-					width="fit-content"
-					muted
-					controls={true}
-					height="464"
-				></ReactPlayer> */}
-				<VideoJS options={VIDEOJS_OPTIONS} />
+				<VideoJS
+					options={VIDEOJS_OPTIONS}
+					data-setup='{"fluid": true}'
+					style="width: 100%; height: 100%"
+				/>
 				<div className="streamer-desc-profile">
 					<section className="left-desc">
 						<section className="left-desc__streamerAvatar">

@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import DispatchContext from '../DispatchContext';
 import ReactPlayer from 'react-player';
 import StateContext from '../StateContext';
+import VideoJS from './VideoJS';
 
 function VideoDashboard(props) {
 	const appState = useContext(StateContext);
@@ -17,7 +18,29 @@ function VideoDashboard(props) {
 		appDispatch({ type: 'userGoOffline' });
 	}
 
+	const VIDEOJS_OPTIONS = {
+		autoplay: 'play',
+		controls: true,
+		preload: 'auto',
+		muted: true,
+		sources: [
+			{
+				src: `http://164.92.134.131:8080/hls/${appState.profileUser.user.streamKey}.m3u8`,
+				type: 'application/x-mpegURL',
+			},
+		],
+		html5: {
+			nativeAudioTracks: false,
+			nativeVideoTracks: false,
+		},
+	};
+
 	return (
+		// <VideoJS
+		// 	options={VIDEOJS_OPTIONS}
+		// 	data-setup='{"fluid": true}'
+		// 	style="width: auto; height: 484px"
+		// />
 		<ReactPlayer
 			url={`http://164.92.134.131:8080/hls/${appState.user.streamKey}.m3u8`}
 			playing="true"

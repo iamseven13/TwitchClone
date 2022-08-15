@@ -457,7 +457,7 @@ body {
 }
 
 .video-side {
-	flex: 0 1 78%;
+	flex: 0 1 73%;
 	position: relative;
 }
 
@@ -1259,4 +1259,9 @@ body {
 	color: rgb(248, 7, 7);
 
 	font-weight: bolder;
+}
+
+.vj {
+	width: auto !important;
+	height: 489px !important;
 }
