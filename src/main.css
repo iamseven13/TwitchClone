@@ -549,6 +549,13 @@ body {
 	position: sticky;
 	height: 100vh;
 	top: 0;
+	overflow-x: hidden;
+}
+
+.chat-renders-here {
+	max-height: 720px;
+	height: auto !important;
+	overflow-y: scroll;
 }
 
 .streamer-desc-profile {
@@ -981,10 +988,8 @@ body {
 	background-color: #242427;
 }
 
-.chat1 svg {
-	height: 3rem;
-
-	width: 3rem;
+.chat1 {
+	display: flex;
 }
 
 .chat-username {
@@ -1004,6 +1009,7 @@ body {
 .chat1-parent {
 	display: flex;
 	margin-top: 1rem;
+	align-items: center;
 }
 
 .chat-input {

@@ -42,7 +42,6 @@ function Profile() {
 			try {
 				const res = await Axios.get(`http://localhost:2000/api/${username}`);
 
-				console.log(res.data);
 				if (res.data.user) {
 					setStreamerProfile(res.data);
 					appDispatch({ type: 'profileUser', data: res.data });

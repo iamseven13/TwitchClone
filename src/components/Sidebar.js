@@ -83,7 +83,7 @@ function SideBar() {
 
 					config
 				);
-				console.log(res.data);
+
 				if (!res.data.msg) {
 					setUsers(res.data);
 					setIsLoading(false);
@@ -95,8 +95,6 @@ function SideBar() {
 
 		fetchUsers();
 	}, []);
-
-	console.log(recommendedUsers);
 
 	if (isLoading) return <div>Loading...</div>;
 

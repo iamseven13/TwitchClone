@@ -34,15 +34,6 @@ function ProfileOffline({ streamerProfile, isFollowing, setIsFollowing }) {
 		},
 	};
 
-	console.log(username);
-
-	useEffect(() => {
-		console.log(appState.setRequestFollowingUpdate);
-		// if (appState.setRequestFollowingUpdate) {
-		// 	appDispatch({ type: 'UnsetRequestFollowingUpdate' });
-		// }
-	}, [appState.profileUser.user.username]);
-
 	async function handleFollow(e) {
 		e.preventDefault();
 		try {
@@ -60,8 +51,6 @@ function ProfileOffline({ streamerProfile, isFollowing, setIsFollowing }) {
 			} else {
 				appDispatch({ type: 'UnsetRequestFollowingUpdate' });
 			}
-
-			console.log(appState.setRequestFollowingUpdate);
 		} catch (e) {
 			console.log(e.message);
 		}
@@ -80,9 +69,7 @@ function ProfileOffline({ streamerProfile, isFollowing, setIsFollowing }) {
 				config
 			);
 
-			console.log(res.data);
 			setIsFollowing(false);
-			console.log(isFollowing);
 			if (!appState.setRequestFollowingUpdate) {
 				appDispatch({ type: 'setRequestFollowingUpdate' });
 			} else {

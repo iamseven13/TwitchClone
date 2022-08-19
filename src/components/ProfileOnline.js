@@ -6,23 +6,16 @@ import IcomoonReact, { iconList } from 'icomoon-react';
 import iconSet from '../selection.json';
 import io from 'socket.io-client';
 import { Link } from 'react-router-dom';
+import Chat from './Chat';
 
 import ReactPlayer from 'react-player';
 import Axios from 'axios';
 import DispatchContext from '../DispatchContext';
 
 function ProfileOnline({ streamerProfile, isFollowing, setIsFollowing }) {
-	let { username } = useParams();
-	const [message, setMessage] = useState('');
-	const [messageReceived, setMessageReceived] = useState([]);
-	const [roomName, setRoomName] = useState(username);
-	const [connectedUsers, setConnectedUsers] = useState([]);
-	const [isSent, setIsSent] = useState(false);
-
-	const socket = io.connect('http://localhost:2000');
-
 	const appState = useContext(StateContext);
 	const appDispatch = useContext(DispatchContext);
+	const [connectedUsers, setConnectedUsers] = useState([]);
 
 	const config = {
 		headers: {
@@ -91,40 +84,7 @@ function ProfileOnline({ streamerProfile, isFollowing, setIsFollowing }) {
 		}
 	}
 
-	// useEffect(() => {
-	// 	socket.emit('join_room', roomName);
-	// }, [roomName]);
-
-	// useEffect(() => {
-	// 	socket.on('connect', () => {
-	// 		let users = [];
-	// 		users = socket.id.split(',');
-
-	// 		setConnectedUsers([users, ...connectedUsers]);
-	// 	});
-	// }, [roomName]);
-
-	const sendMessage = (e) => {
-		e.preventDefault();
-		socket.emit('send_message', { message, roomName });
-		setMessage('');
-		setIsSent(true);
-	};
-
-	// useEffect(() => {
-	// 	socket.on('receive_message', (data) => {
-	// 		setMessageReceived([...messageReceived, data.message]);
-	// 	});
-	// }, [socket]);
-
-	function handleChatInput(e) {
-		e.preventDefault();
-		setMessage(e.target.value);
-	}
-
 	let videoUrl = `http://164.92.134.131:8080/hls/${appState.profileUser.user.streamKey}.m3u8`;
-
-	console.log(streamerProfile);
 
 	return (
 		<>
@@ -388,135 +348,7 @@ function ProfileOnline({ streamerProfile, isFollowing, setIsFollowing }) {
 					</section>
 				</section>
 			</div>
-
-			<div className="chat-side">
-				<section className="chat-side-first-part">
-					<div className="chat-side-first-part__item1">
-						<svg className="right-desc__icons-top-svg">
-							<IcomoonReact
-								iconSet={iconSet}
-								icon="arrow-right"
-								color="white"
-							/>
-						</svg>
-					</div>
-					<span className="chat-side-first-part__item2">STREAM CHAT</span>
-					<div className="chat-side-first-part__item3">
-						<svg className="right-desc__icons-top-svg">
-							<IcomoonReact iconSet={iconSet} icon="users" color="white" />
-						</svg>
-					</div>
-				</section>
-				<section className="chat-side-second-part">
-					<section className="chat-side-second-part__item1">
-						<svg className="right-desc__icons-top-svg bits-big">
-							<IcomoonReact iconSet={iconSet} icon="diamonds" color="gold" />
-						</svg>
-						<span className="bits-number-one">1</span>
-						<section className="chat-side-second-part__item1__user">
-							<span className="bits-name">jjsto9</span>
-							<section>
-								<svg className="right-desc__icons-top-svg bits">
-									<IcomoonReact
-										iconSet={iconSet}
-										icon="diamonds"
-										color="#9c3ee8"
-									/>
-								</svg>
-								<span className="number-of-bits">510</span>
-							</section>
-						</section>
-					</section>
-
-					<div className="least-bits">
-						<section className="chat-side-second-part__item1">
-							<svg className="right-desc__icons-top-svg bits-big">
-								<IcomoonReact iconSet={iconSet} icon="diamonds" color="aqua" />
-							</svg>
-							<span className="bits-number-one">2</span>
-							<section className="chat-side-second-part__item1__user">
-								<span className="bits-name">marol</span>
-								<section>
-									<svg className="right-desc__icons-top-svg bits">
-										<IcomoonReact
-											iconSet={iconSet}
-											icon="diamonds"
-											color="#9c3ee8"
-										/>
-									</svg>
-									<span className="number-of-bits">320</span>
-								</section>
-							</section>
-						</section>
-
-						<section className="chat-side-second-part__item1">
-							<svg className="right-desc__icons-top-svg bits-big">
-								<IcomoonReact iconSet={iconSet} icon="diamonds" color="brown" />
-							</svg>
-							<span className="bits-number-one">3</span>
-							<section className="chat-side-second-part__item1__user">
-								<span className="bits-name">Jacob</span>
-								<section>
-									<svg className="right-desc__icons-top-svg bits">
-										<IcomoonReact
-											iconSet={iconSet}
-											icon="diamonds"
-											color="#9c3ee8"
-										/>
-									</svg>
-									<span className="number-of-bits">290</span>
-								</section>
-							</section>
-						</section>
-					</div>
-				</section>
-
-				{messageReceived.map((comment, index) => (
-					<section key={index} className="chat-side-third-part">
-						<div className="chat1-parent">
-							<section className="chat1">
-								<svg className="chat-icons">
-									<IcomoonReact
-										iconSet={iconSet}
-										icon="diamonds"
-										color="#9c3ee8"
-									/>
-								</svg>
-							</section>
-							<div>
-								<span className="chat-username">
-									{appState.loggedIn ? appState.user.username : 'user'}: {''}{' '}
-									<span className="chat-message">{comment}</span>
-								</span>
-							</div>
-						</div>
-					</section>
-				))}
-
-				<section className="chat-input">
-					{appState.user.username ? (
-						<form onSubmit={sendMessage}>
-							<input autoFocus></input>
-							<Link
-								to=""
-								onClick={sendMessage}
-								className="chat-button"
-								href="#"
-							>
-								Chat
-							</Link>
-						</form>
-					) : (
-						<form className="chat-disabled">
-							<input className="not-loggedIn" disabled value={message}></input>
-							<span className="text">
-								You need to <a href="#">login</a>/<a href="#">register</a> to
-								chat
-							</span>
-						</form>
-					)}
-				</section>
-			</div>
+			<Chat />
 		</>
 	);
 }
