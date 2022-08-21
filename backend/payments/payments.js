@@ -1,8 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
+const config = require('config');
 
-const stripe = require('stripe')(
-	'sk_test_51KZcfXDWV5T7RQOzVXFLhulnjKTrFB3HmM9kXbcEfOlemdbA4nonvaPyZnTFUeCPDkpL32AjtPf1MCdSDd1cxY1v00qHEv1jlq'
-);
+const stripe = require('stripe')(config.get('stripeKey'));
 
 const uuid = uuidv4();
 
