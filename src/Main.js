@@ -23,6 +23,7 @@ import ProfileOffline from './components/ProfileOffline';
 import Dashboard from './components/Dashboard';
 import Product from './components/Product';
 import EditProfile from './components/EditProfile';
+import Checkout from './components/Checkout';
 
 function Main() {
 	const initialState = {
@@ -48,10 +49,12 @@ function Main() {
 				id: '',
 				streamKey: '',
 				isLive: false,
+				subscribers: [],
 			},
 		},
 		isDashboard: false,
 		setRequestFollowingUpdate: false,
+		isCheckoutFormOpen: false,
 	};
 
 	function ourReducer(draft, action) {
@@ -102,6 +105,12 @@ function Main() {
 			case 'UnsetRequestFollowingUpdate':
 				draft.setRequestFollowingUpdate = false;
 				break;
+			case 'openIsCheckoutForm':
+				draft.isCheckoutFormOpen = true;
+				break;
+			case 'closeIsCheckoutForm':
+				draft.isCheckoutFormOpen = false;
+				break;
 			default:
 				break;
 		}
@@ -145,6 +154,12 @@ function Main() {
 								></Route>
 								<Route path="/payment/stripe" element={<Product />}></Route>
 								<Route path="/settings" element={<EditProfile />}></Route>
+
+								<Route
+									path="/order/123/complete/*"
+									exact
+									element={<NotFound />}
+								></Route>
 							</Switch>
 						</div>
 					</div>
@@ -152,6 +167,7 @@ function Main() {
 					{state.isRegisterOpen ? <Register /> : ''}
 					{state.isLoginOpen ? <Login /> : ''}
 					{state.isSettingsOpen ? <Settings /> : ''}
+					{state.isCheckoutFormOpen ? <Checkout /> : ''}
 				</BrowserRouter>
 			</DispatchContext.Provider>
 		</StateContext.Provider>

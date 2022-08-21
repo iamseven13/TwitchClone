@@ -12,16 +12,27 @@ import ReactPlayer from 'react-player';
 import Axios from 'axios';
 import DispatchContext from '../DispatchContext';
 
-function ProfileOnline({ streamerProfile, isFollowing, setIsFollowing }) {
+function ProfileOnline({
+	streamerProfile,
+	isFollowing,
+	setIsFollowing,
+	isSubbed,
+	setIsSubbed,
+}) {
 	const appState = useContext(StateContext);
 	const appDispatch = useContext(DispatchContext);
 	const [connectedUsers, setConnectedUsers] = useState([]);
+	const [fetchingDone, setIsFetchingDone] = useState(false);
+	const [query, setQuery] = useState(
+		new URLSearchParams(window.location.search)
+	);
 
 	const config = {
 		headers: {
 			'x-auth-token': appState.user.token,
 		},
 	};
+	let { username } = useParams();
 
 	const VIDEOJS_OPTIONS = {
 		autoplay: 'play',
@@ -39,6 +50,39 @@ function ProfileOnline({ streamerProfile, isFollowing, setIsFollowing }) {
 			nativeVideoTracks: false,
 		},
 	};
+
+	useEffect(() => {
+		// Check to see if this is a redirect back from Checkout
+		const query = new URLSearchParams(window.location.search);
+		console.log(query.get('success'));
+
+		if (query.get('success')) {
+			console.log('Order placed! You will receive an email confirmation.');
+
+			try {
+				async function postSubscription() {
+					const res = await Axios.post(
+						'http://localhost:2000/api/ylli/subscribe',
+						{ streamer: username },
+						config
+					);
+					console.log(res.data);
+
+					setIsSubbed(true);
+					setIsFetchingDone(true);
+				}
+				postSubscription();
+			} catch (e) {
+				console.log(e.message);
+			}
+		}
+
+		if (query.get('canceled')) {
+			alert(
+				"Order canceled -- continue to shop around and checkout when you're ready."
+			);
+		}
+	}, [query]);
 
 	async function handleFollow(e) {
 		e.preventDefault();
@@ -86,6 +130,32 @@ function ProfileOnline({ streamerProfile, isFollowing, setIsFollowing }) {
 
 	let videoUrl = `http://164.92.134.131:8080/hls/${appState.profileUser.user.streamKey}.m3u8`;
 
+	const handleSubscribeForm = (e) => {
+		e.preventDefault();
+		appDispatch({ type: 'openIsCheckoutForm' });
+	};
+
+	const handleUnSubscribeForm = (e) => {
+		e.preventDefault();
+
+		try {
+			async function UnSubscription() {
+				const res = await Axios.post(
+					'http://localhost:2000/api/:username/Unsubscribe',
+					{ streamer: username },
+					config
+				);
+				console.log(res.data);
+
+				setIsSubbed(false);
+				setIsFetchingDone(false);
+			}
+			UnSubscription();
+		} catch (e) {
+			console.log(e.message);
+		}
+	};
+
 	return (
 		<>
 			<div className="video-side">
@@ -118,7 +188,19 @@ function ProfileOnline({ streamerProfile, isFollowing, setIsFollowing }) {
 					</section>
 					<section className="right-desc">
 						<section className="right-desc__icons-top">
-							{isFollowing ? (
+							{appState.user.username === appState.profileUser.user.username &&
+							appState.loggedIn ? (
+								<Link to="/settings" className="offline-follow-btn">
+									<svg className="right-desc__icons-top-svg">
+										<IcomoonReact
+											iconSet={iconSet}
+											icon="profile"
+											color="white"
+										/>
+									</svg>
+									Edit Profile{' '}
+								</Link>
+							) : isFollowing ? (
 								<>
 									<Link to="/" onClick={handleUnFollow}>
 										<svg className="right-desc__icons-top-svg">
@@ -156,31 +238,54 @@ function ProfileOnline({ streamerProfile, isFollowing, setIsFollowing }) {
 								</Link>
 							)}
 
-							<form
-								action="http://localhost:2000/api/payment"
-								className="subscribe-form"
-								method="POST"
-							>
-								<button
-									type="submit"
-									className="right-desc__icons-top-subscribe"
-								>
-									<svg className="right-desc__icons-top-svg">
-										<IcomoonReact
-											iconSet={iconSet}
-											icon="star-empty"
-											color="white"
-										/>
-									</svg>
-									<h4>Subscribe</h4>
-									<svg className="right-desc__icons-top-svg">
-										<IcomoonReact
-											iconSet={iconSet}
-											icon="arrow-down2"
-											color="white"
-										/>
-									</svg>
-								</button>
+							<form className="subscribe-form">
+								{!appState.profileUser.user.subscribers.includes(
+									appState.user.username
+								) ||
+								!isSubbed ||
+								!appState.loggedIn ? (
+									<a
+										onClick={handleSubscribeForm}
+										className="right-desc__icons-top-subscribe"
+									>
+										<svg className="right-desc__icons-top-svg">
+											<IcomoonReact
+												iconSet={iconSet}
+												icon="star-empty"
+												color="white"
+											/>
+										</svg>
+										<h4>Subscribe</h4>
+										<svg className="right-desc__icons-top-svg">
+											<IcomoonReact
+												iconSet={iconSet}
+												icon="arrow-down2"
+												color="white"
+											/>
+										</svg>
+									</a>
+								) : (
+									<a
+										onClick={handleUnSubscribeForm}
+										className="right-desc__icons-top-subscribe unsub-button"
+									>
+										<svg className="right-desc__icons-top-svg">
+											<IcomoonReact
+												iconSet={iconSet}
+												icon="star-empty"
+												color="white"
+											/>
+										</svg>
+										<h4>Unsubscribe</h4>
+										<svg className="right-desc__icons-top-svg">
+											<IcomoonReact
+												iconSet={iconSet}
+												icon="arrow-down2"
+												color="white"
+											/>
+										</svg>
+									</a>
+								)}
 							</form>
 						</section>
 

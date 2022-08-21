@@ -102,7 +102,7 @@ function SideBar() {
 		<>
 			<nav className="sidebar">
 				<h2 className="followed-channel">
-					{followingUsers.length ? 'Followed Channels' : 'Recommended'}
+					{appState.loggedIn ? 'Followed Channels' : 'Recommended'}
 					<svg className="user-nav__icon followed-arrow">
 						<IcomoonReact iconSet={iconSet} icon="arrow-left" />
 					</svg>

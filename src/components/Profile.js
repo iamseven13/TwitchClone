@@ -15,6 +15,7 @@ function Profile() {
 	const appDispatch = useContext(DispatchContext);
 
 	const [isFollowing, setIsFollowing] = useState(false);
+	const [isSubbed, setIsSubbed] = useState(false);
 
 	const [streamerProfile, setStreamerProfile] = useState({
 		user: {
@@ -46,7 +47,16 @@ function Profile() {
 					setStreamerProfile(res.data);
 					appDispatch({ type: 'profileUser', data: res.data });
 					// appDispatch({ type: 'userGoLive' });
-				} else {
+
+					if (
+						!res.data.user.subscribers.includes(
+							appState.user.username.toString()
+						)
+					) {
+						setIsSubbed(false);
+					} else {
+						setIsSubbed(true);
+					}
 				}
 			} catch (e) {
 				console.log(e.message);
@@ -57,6 +67,8 @@ function Profile() {
 	}, [username]);
 
 	const loggedIn = appState.loggedIn;
+
+	console.log(isSubbed);
 
 	useEffect(() => {
 		async function fetchProfileIsFollowing() {
@@ -77,6 +89,8 @@ function Profile() {
 		fetchProfileIsFollowing();
 	}, [username, loggedIn]);
 
+	console.log(isSubbed);
+
 	return (
 		<div className="profile-screen-online">
 			{appState.profileUser.user.isLive ? (
@@ -84,12 +98,16 @@ function Profile() {
 					streamerProfile={streamerProfile}
 					isFollowing={isFollowing}
 					setIsFollowing={setIsFollowing}
+					isSubbed={isSubbed}
+					setIsSubbed={setIsSubbed}
 				/>
 			) : (
 				<ProfileOffline
 					streamerProfile={streamerProfile}
 					isFollowing={isFollowing}
 					setIsFollowing={setIsFollowing}
+					isSubbed={isSubbed}
+					setIsSubbed={setIsSubbed}
 				/>
 			)}
 		</div>
